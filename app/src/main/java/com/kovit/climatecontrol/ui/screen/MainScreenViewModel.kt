@@ -39,6 +39,7 @@ class MainScreenViewModel() : ViewModel() {
     fun canbusCMD(adj: Int) {
         var rm = MsToolkitConnection.instance.remoteToolkit?.getRemoteModule(ModuleCodes.MODULE_CODE_CANBUS)
         rm?.cmd(0, intArrayOf(adj, 1), null, null)
+        rm?.cmd(0, intArrayOf(-1, 0), null, null)
     }
 
     fun canBusNotify(systemName: String, updateCode: Int, intArray: IntArray?, floatArray: FloatArray?, strArray: Array<String?>?) {
