@@ -10,8 +10,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.aoe.fytcanbusmonitor.ModuleCodes
+import com.aoe.fytcanbusmonitor.MsToolkitConnection
 import com.kovit.climatecontrol.ui.screen.MainScreen
 import com.kovit.climatecontrol.ui.theme.ClimateControlTheme
+import com.ryansteckler.lx470climate.IPCConnection
+import com.ryansteckler.lx470climate.ModuleCallback
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,53 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    override fun onStart() {
+        super.onStart()
+        ModuleCallback.init(this)
+        connectMain()
+        connectCanbus()
+        connectSound()
+        connectCanUp()
+        MsToolkitConnection.instance.connect(this)
+
+    }
+
+    private fun connectMain() {
+        val callback = ModuleCallback("Main", null)
+        val connection = IPCConnection(ModuleCodes.MODULE_CODE_MAIN)
+        for (i in 0..119) {
+            connection.addCallback(callback, i)
+        }
+        MsToolkitConnection.instance.addObserver(connection)
+    }
+
+    private fun connectCanbus() {
+        val callback = ModuleCallback("Canbus", null)
+        val connection = IPCConnection(ModuleCodes.MODULE_CODE_CANBUS)
+        for (i in 0..50) {
+            connection.addCallback(callback, i)
+        }
+        for (i in 1000..1036) {
+            connection.addCallback(callback, i)
+        }
+        MsToolkitConnection.instance.addObserver(connection)
+    }
+
+    private fun connectSound() {
+        val callback = ModuleCallback("Sound", null)
+        val connection = IPCConnection(ModuleCodes.MODULE_CODE_SOUND)
+        for (i in 0..49) {
+            connection.addCallback(callback, i)
+        }
+        MsToolkitConnection.instance.addObserver(connection)
+    }
+
+    private fun connectCanUp() {
+        val callback = ModuleCallback("CanUp", null)
+        val connection = IPCConnection(ModuleCodes.MODULE_CODE_CAN_UP)
+        connection.addCallback(callback, 100)
+        MsToolkitConnection.instance.addObserver(connection)
     }
 }
 

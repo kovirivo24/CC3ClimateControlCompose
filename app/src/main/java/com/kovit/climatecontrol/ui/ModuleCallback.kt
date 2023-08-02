@@ -9,7 +9,7 @@ import com.aoe.fytcanbusmonitor.IModuleCallback
 import com.kovit.climatecontrol.MainActivity
 import com.kovit.climatecontrol.ui.screen.MainScreenViewModel
 
-class ModuleCallback(name: String, private val view: TextView?) : IModuleCallback.Stub() {
+class ModuleCallback(name: String) : IModuleCallback.Stub() {
     private val systemName = name
 
     @Throws(RemoteException::class)

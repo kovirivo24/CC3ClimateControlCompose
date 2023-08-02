@@ -13,7 +13,8 @@ import com.kovit.climatecontrol.ui.data.AirTemp
 class MainScreenViewModel() : ViewModel() {
     private val remoteProxy = RemoteModuleProxy()
 
-    var windowOn: Boolean = false
+    var callback = ""
+
     var faceOn: Boolean = false
     var feetOn: Boolean = false
 
@@ -22,6 +23,18 @@ class MainScreenViewModel() : ViewModel() {
     //temp info
     var leftTemp: String = "00"
     var rightTemp: String = "00"
+    var sync: Boolean = true
+
+    //power info
+    var auto = true
+    var off = false
+    var airCon = false
+
+    // air info
+    var fanSpeed = "0"
+    var recircMode = 0
+    var defrostOn = false
+    var windshieldDef = false
 
     fun canbusCMD(adj: Int) {
         var rm = MsToolkitConnection.instance.remoteToolkit?.getRemoteModule(ModuleCodes.MODULE_CODE_CANBUS)
@@ -66,49 +79,61 @@ class MainScreenViewModel() : ViewModel() {
                         }
                     }
                 }
-                /*
+
                 4 -> {
                     val autoOn = intArray?.get(0)
-                    findViewById<TextView>(R.id.lblAuto).visibility =
-                        if (autoOn == 0) View.INVISIBLE else View.VISIBLE
+                    auto = (autoOn != 0)
                 }
                 2 -> {
                     val acOn = intArray?.get(0)
-                    findViewById<ImageView>(R.id.imgAC).setImageResource(if (acOn == 1) R.drawable.img_ac_on else R.drawable.img_ac_off)
+                    airCon = (acOn == 1)
                 }
                 3 -> {
                     val recircOn = intArray?.get(0)
-                    findViewById<ImageView>(R.id.imgRecirc).setImageResource(if (recircOn == 1) R.drawable.img_recirc_on else R.drawable.img_recirc_off)
+                    if (recircOn == 1) {
+                        recircMode = 0
+                    }
                 }
                 15 -> {
                     val recircAutoOn = intArray?.get(0)
-                    findViewById<TextView>(R.id.lblAutoRecirc).visibility =
-                        if (recircAutoOn == 0) View.INVISIBLE else View.VISIBLE
+                    if (recircAutoOn == 0) {
+                        recircMode = 1
+                    }
                 }
                 10 -> {
-                    val fanSpeed = intArray?.get(0)
-                    findViewById<TextView>(R.id.txtFanSpeed).text = fanSpeed.toString()
+                    val canFanSpeed = intArray?.get(0)
+                    fanSpeed = canFanSpeed.toString()
                 }
                 6 -> {
-                    val defrostOn = intArray?.get(0)
-                    findViewById<ImageView>(R.id.imgDefrost).setImageResource(if (defrostOn == 1) R.drawable.img_defrost_on else R.drawable.img_defrost_off)
+                    defrostOn = intArray?.get(0) == 1
                 }
                 7 -> {
-                    windowOn = intArray?.get(0) == 1
-                    handleVentStatus()
+                    windshieldDef = intArray?.get(0) == 1
+//                    handleVentStatus()
                 }
                 8 -> {
                     faceOn = intArray?.get(0) == 1
-                    handleVentStatus()
+//                    handleVentStatus()
                 }
                 9 -> {
                     feetOn = intArray?.get(0) == 1
-                    handleVentStatus()
+//                    handleVentStatus()
                 }
-*/
             }
         }
 
     }
-
+//    fun handleVentStatus() {
+//        if (faceOn && feetOn) {
+//            findViewById<ImageView>(R.id.imgVents).setImageResource(R.drawable.img_vents_foot_face)
+//        } else if (feetOn && windowOn) {
+//            findViewById<ImageView>(R.id.imgVents).setImageResource(R.drawable.img_vents_foot_defrost)
+//        } else if (feetOn) {
+//            findViewById<ImageView>(R.id.imgVents).setImageResource(R.drawable.img_vents_foot)
+//        } else if (faceOn) {
+//            findViewById<ImageView>(R.id.imgVents).setImageResource(R.drawable.img_vents_face)
+//        } else {
+//            findViewById<ImageView>(R.id.imgVents).setImageResource(R.drawable.img_vents_off)
+//        }
+//    }
 }
