@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connectMain() {
-        val callback = ModuleCallback("Main", null)
+        val callback = ModuleCallback("Main")
         val connection = IPCConnection(ModuleCodes.MODULE_CODE_MAIN)
         for (i in 0..119) {
             connection.addCallback(callback, i)
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connectCanbus() {
-        val callback = ModuleCallback("Canbus", null)
+        val callback = ModuleCallback("Canbus")
         val connection = IPCConnection(ModuleCodes.MODULE_CODE_CANBUS)
         for (i in 0..50) {
             connection.addCallback(callback, i)
@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connectSound() {
-        val callback = ModuleCallback("Sound", null)
+        val callback = ModuleCallback("Sound")
         val connection = IPCConnection(ModuleCodes.MODULE_CODE_SOUND)
         for (i in 0..49) {
             connection.addCallback(callback, i)
@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun connectCanUp() {
-        val callback = ModuleCallback("CanUp", null)
+        val callback = ModuleCallback("CanUp")
         val connection = IPCConnection(ModuleCodes.MODULE_CODE_CAN_UP)
         connection.addCallback(callback, 100)
         MsToolkitConnection.instance.addObserver(connection)
