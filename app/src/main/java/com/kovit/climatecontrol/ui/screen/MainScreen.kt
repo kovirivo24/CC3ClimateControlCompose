@@ -17,8 +17,7 @@ import com.kovit.climatecontrol.ui.data.AirPower
 import com.kovit.climatecontrol.ui.data.AirTemp
 
 @Composable
-fun MainScreen(
-    mainViewModel: MainScreenViewModel = viewModel()
+fun MainScreen(mainViewModel: MainScreenViewModel
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         // left temp control

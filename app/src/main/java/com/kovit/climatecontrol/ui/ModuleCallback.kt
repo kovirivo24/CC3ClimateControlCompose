@@ -27,8 +27,9 @@ class ModuleCallback(name: String) : IModuleCallback.Stub() {
         private lateinit var viewModel: MainScreenViewModel
 
         @RequiresApi(Build.VERSION_CODES.O)
-        fun init(mainAct: MainActivity) {
+        fun init(mainAct: MainActivity, mainScreenViewModel: MainScreenViewModel) {
             act = mainAct
+            viewModel = mainScreenViewModel
         }
 
         @Synchronized

@@ -10,28 +10,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoe.fytcanbusmonitor.ModuleCodes
 import com.aoe.fytcanbusmonitor.MsToolkitConnection
 import com.kovit.climatecontrol.ui.screen.MainScreen
+import com.kovit.climatecontrol.ui.screen.MainScreenViewModel
 import com.kovit.climatecontrol.ui.theme.ClimateControlTheme
 import com.ryansteckler.lx470climate.IPCConnection
 import com.ryansteckler.lx470climate.ModuleCallback
 
 class MainActivity : ComponentActivity() {
+
+    private var mainViewModel = MainScreenViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ClimateControlTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    MainScreen()
+                    MainScreen(mainViewModel)
                 }
             }
         }
     }
     override fun onStart() {
         super.onStart()
-        ModuleCallback.init(this)
+        ModuleCallback.init(this, mainViewModel)
         connectMain()
         connectCanbus()
         connectSound()
